@@ -1,0 +1,7 @@
+name: TBoosts
+main: me.theseems.tboosts.Main
+version: 0.1D
+depend: [PlaceholderAPI]
+api-version: 1.13
+commands:
+  boosts:

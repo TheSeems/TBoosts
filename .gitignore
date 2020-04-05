@@ -1,0 +1,4 @@
+# Project exclude paths
+/tboosts-api/target/
+/tboosts-common/target/
+/tboosts-spigot/target/
