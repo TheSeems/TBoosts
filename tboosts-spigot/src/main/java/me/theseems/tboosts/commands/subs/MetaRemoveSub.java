@@ -9,16 +9,16 @@ public class MetaRemoveSub implements SubCommand {
   @Override
   public void pass(CommandSender sender, String[] args) {
     if (args.length == 0) {
-      sender.sendMessage("§7Please, specify meta key to remove");
+      sender.sendMessage("§7Покажуйста, укажите мета-ключ");
       return;
     }
 
     Player actual = (Player) sender;
     if (actual.hasMetadata(args[0])) {
+      sender.sendMessage("§7Удалено значение по мета-ключу §6'" + args[0] + "' §7: " + actual.getMetadata(args[0]).toString());
       actual.removeMetadata(args[0], Main.getPlugin());
-      sender.sendMessage("§aOk.");
     } else {
-      sender.sendMessage("§7No metadata found by that key for you");
+      sender.sendMessage("§7Для вас не найдено значения по мета-ключу §6'" + args[0] + "'");
     }
   }
 

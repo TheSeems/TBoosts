@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -19,37 +20,40 @@ public class BoostsGiveSub implements SubCommand {
     }
 
     UUID player;
-    String booster;
+    String booster = args[0];
 
     if (args.length == 1) {
       if (!(sender instanceof Player)) {
-        sender.sendMessage("§7Please, specify player to give booster to");
+        sender.sendMessage(
+            "§7Укажите ник игрока, которому хотите выдать ему бустер. (Вы не игрок)");
         return;
       }
 
       player = ((Player) sender).getUniqueId();
-      booster = args[0];
     } else {
-      Player actual = Bukkit.getPlayer(args[0]);
+      Player actual = Bukkit.getPlayer(args[1]);
       if (actual == null) {
-        sender.sendMessage("§7Player is offline..");
+        sender.sendMessage("§7Этот игрок оффлайн");
         return;
       }
 
       player = actual.getUniqueId();
-      booster = args[1];
     }
 
     Optional<Booster> optionalBooster = TBoostsAPI.getBoosterManager().produce(player, booster);
     if (!optionalBooster.isPresent()) {
-      sender.sendMessage("§7Booster §6'" + booster + "' §7does not exist");
+      sender.sendMessage("§7Бустер §6'" + booster + "' §7не найден в системе");
       return;
     }
 
+    sender.sendMessage(
+            "§aВыдан бустер '"
+                    + booster
+                    + "' игроку "
+                    + Objects.requireNonNull(Bukkit.getPlayer(player)).getDisplayName());
     Booster actual = optionalBooster.get();
     TBoostsAPI.getBoosterStorage().add(actual);
 
-    sender.sendMessage("§aВыдан бустер '" + actual.getName() + "'");
     actual.apply();
   }
 

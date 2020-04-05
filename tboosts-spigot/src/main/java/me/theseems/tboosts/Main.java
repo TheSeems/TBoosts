@@ -140,6 +140,35 @@ public class Main extends JavaPlugin {
               }
             });
 
+      // Hulk test
+      TBoostsAPI.getBoosterManager()
+              .register(
+                      new BoosterFactory() {
+                          @Override
+                          public String getName() {
+                              return "test";
+                          }
+
+                          @Override
+                          public Booster produce(UUID player) {
+                              DamageBooster booster =
+                                      new DamageBooster(player) {
+                                          @Override
+                                          public String getName() {
+                                              return "test";
+                                          }
+                                      };
+                              booster.setMeta(new SpigotBoosterMeta(Bukkit.getPlayer(player), "test"));
+                              if (!booster.getMeta().getKeys().contains("init")) {
+                                  booster.getMeta().set("init", true);
+                                  booster.getMeta().set("display_name", "§7§oТестовый бустер §k[!]§r");
+                                  booster.getMeta().set("expire", 10);
+                                  booster.getMeta().set("date", System.currentTimeMillis());
+                              }
+                              return booster;
+                          }
+                      });
+
     TBoostsAPI.getBoosterManager()
       .register(new BoosterFactory() {
         @Override

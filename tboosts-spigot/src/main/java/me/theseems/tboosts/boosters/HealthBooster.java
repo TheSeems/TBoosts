@@ -2,11 +2,13 @@ package me.theseems.tboosts.boosters;
 
 import me.theseems.tboosts.*;
 import me.theseems.tboosts.storage.SpigotBoosterMeta;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public abstract class HealthBooster implements TemporaryBooster, Booster {
   private BoosterMeta meta;
@@ -17,6 +19,14 @@ public abstract class HealthBooster implements TemporaryBooster, Booster {
     Player actual = Bukkit.getPlayer(player);
     if (actual == null) return;
 
+    if (actual.hasPermission("tb.debug"))
+      actual.sendMessage(
+          ChatColor.BLUE
+              + getName()
+              + " # Apply with meta: "
+              + meta.getKeys().stream()
+                  .map(s -> s + " --> " + meta.get(s))
+                  .collect(Collectors.joining(" ; ")));
     actual
         .getAttribute(Attribute.GENERIC_MAX_HEALTH)
         .setBaseValue(getMeta().getDouble("amount").orElse(20D));
@@ -28,8 +38,20 @@ public abstract class HealthBooster implements TemporaryBooster, Booster {
     if (actual == null) return;
 
     actual.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20D);
-    for (String key : meta.getKeys()) {
-      meta.remove(key);
+    if (actual.hasPermission("tb.debug"))
+      actual.sendMessage(ChatColor.BLUE + getName() + " # Take");
+
+    if (meta instanceof SpigotBoosterMeta) {
+      if (actual.hasPermission("tb.debug"))
+        actual.sendMessage(
+            ChatColor.BLUE + getName() + " # Spigot meta removed. Were " + meta.getKeys());
+      ((SpigotBoosterMeta) meta).remove();
+    } else {
+      for (String key : meta.getKeys()) {
+        if (actual.hasPermission("tb.debug"))
+          actual.sendMessage(ChatColor.BLUE + getName() + " # From other meta removed: " + key);
+        meta.remove(key);
+      }
     }
   }
 

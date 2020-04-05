@@ -1,38 +1,37 @@
 package me.theseems.tboosts.boosters;
 
-import me.theseems.tboosts.*;
+import me.theseems.tboosts.Booster;
+import me.theseems.tboosts.BoosterMeta;
+import me.theseems.tboosts.TBoostsAPI;
+import me.theseems.tboosts.TemporaryBooster;
 import me.theseems.tboosts.storage.SpigotBoosterMeta;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public abstract class DamageBooster implements TemporaryBooster, Booster {
   private BoosterMeta meta;
   private UUID player;
 
   @Override
-  public void apply() {
-    Player actual = Bukkit.getPlayer(player);
-    if (actual == null) return;
-
-    actual
-        .getAttribute(Attribute.GENERIC_ATTACK_DAMAGE)
-        .setBaseValue(getMeta().getDouble("amount").orElse(1D));
-  }
+  public void apply() {}
 
   @Override
   public void take() {
     Player actual = Bukkit.getPlayer(player);
     if (actual == null) return;
 
-    actual.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(1D);
-    actual.sendMessage(">?> TAKE!");
     if (meta instanceof SpigotBoosterMeta) {
       ((SpigotBoosterMeta) meta).remove();
-    } else for (String key : meta.getKeys()) {
-      meta.remove(key);
+    } else {
+      for (String key : meta.getKeys()) {
+        meta.remove(key);
+      }
     }
   }
 
@@ -40,6 +39,9 @@ public abstract class DamageBooster implements TemporaryBooster, Booster {
     meta = new SpigotBoosterMeta(Bukkit.getPlayer(player), getName());
     if (!getMeta().getKeys().contains("amount")) getMeta().set("amount", amount);
     if (!getMeta().getKeys().contains("date")) getMeta().set("date", System.currentTimeMillis());
+    if (!getMeta().getKeys().contains("expire")) getMeta().set("expire", 30);
+    if (!getMeta().getKeys().contains("display_name"))
+      getMeta().set("display_name", "§4§lУдар Халка");
   }
 
   public DamageBooster(UUID player) {

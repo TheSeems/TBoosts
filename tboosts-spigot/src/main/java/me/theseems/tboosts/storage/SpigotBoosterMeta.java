@@ -27,14 +27,12 @@ public class SpigotBoosterMeta implements BoosterMeta {
       System.out.println(">> Removed meta '" + prefix + key + "'");
       player.removeMetadata(prefix + key, Main.getPlugin());
     }
-    player.removeMetadata(prefix + "$-1", Main.getPlugin());
+    player.removeMetadata(prefix + "$-l", Main.getPlugin());
   }
 
   @Override
   public void set(String key, Object value) {
     player.setMetadata(prefix + key, new FixedMetadataValue(Main.getPlugin(), value));
-    System.out.println(prefix + key + " => " + value);
-    System.out.println(prefix + "$-l" + " => " + Utils.StringList.ofMeta(player, prefix + "$-l"));
     Utils.StringList.ofMeta(player, prefix + "$-l").add(key).setAsMeta();
   }
 

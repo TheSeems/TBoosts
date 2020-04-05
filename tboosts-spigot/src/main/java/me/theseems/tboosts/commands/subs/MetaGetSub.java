@@ -11,13 +11,13 @@ public class MetaGetSub implements SubCommand {
   @Override
   public void pass(CommandSender sender, String[] args) {
     if (args.length == 0) {
-      sender.sendMessage("§7Please, specify key in order to get meta");
+      sender.sendMessage("§7Укажите ключ для доступа к мета-полю");
       return;
     }
 
     Player player = (Player) sender;
     List<MetadataValue> valueList = player.getMetadata(args[0]);
-    sender.sendMessage("§7Results: §6" + valueList.size());
+    sender.sendMessage("§7Найдено: §6" + valueList.size());
     valueList.forEach(metadataValue -> sender.sendMessage("§8» §7" + metadataValue.value()));
   }
 
