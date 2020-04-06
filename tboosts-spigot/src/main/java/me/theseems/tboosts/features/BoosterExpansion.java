@@ -31,7 +31,7 @@ public class BoosterExpansion extends PlaceholderExpansion {
     long seconds = secs % 60;
     String minutesString = (minutes >= 10 ? "" + minutes : "0" + minutes);
     String secondsString = (seconds >= 10 ? "" + seconds : "0" + seconds);
-    return minutesString+ ":" + secondsString;
+    return minutesString + ":" + secondsString;
   }
 
   @Override
@@ -68,7 +68,8 @@ public class BoosterExpansion extends PlaceholderExpansion {
                 boosters.add(
                     booster.getMeta().getString("display_name").orElse("§e" + booster.getName())
                         + " §7: "
-                        + format(booster.getMeta().getInteger("expire").orElse(100) - secondsPast + 1));
+                        + format(
+                            booster.getMeta().getInteger("expire").orElse(100) - secondsPast + 1));
               });
 
       StringBuilder returnValue = new StringBuilder();
@@ -80,6 +81,11 @@ public class BoosterExpansion extends PlaceholderExpansion {
         returnValue.delete(returnValue.length() - 2, returnValue.length());
 
       return returnValue.toString();
+    }
+
+    if (params.startsWith("has")) {
+      String name = params.substring(3);
+      return TBoostsAPI.getBoosterStorage().hasBooster(p.getUniqueId(), name) ? "true" : "false";
     }
 
     return "§0<?>";
