@@ -11,6 +11,8 @@ import org.bukkit.scheduler.BukkitTask;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.UUID;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class BoosterTimeHandler {
   private BukkitTask task;
@@ -18,14 +20,16 @@ public class BoosterTimeHandler {
   public void handleBooster(TemporaryBooster temporaryBooster, UUID player) {
     Date from = new Date((Long) temporaryBooster.getMeta().get("date").orElse(0L));
     Date now = new Date();
-    if (ChronoUnit.SECONDS.between(from.toInstant(), now.toInstant()) > temporaryBooster.getExpireSeconds(player)) {
+    if (ChronoUnit.SECONDS.between(from.toInstant(), now.toInstant())
+        > temporaryBooster.getExpireSeconds(player)) {
       temporaryBooster.onExpire(player);
     }
   }
 
   public void run() {
     for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-      for (Booster booster : TBoostsAPI.getBoosterStorage().getBoosters(onlinePlayer.getUniqueId())) {
+      for (Booster booster :
+          TBoostsAPI.getBoosterStorage().getBoosters(onlinePlayer.getUniqueId())) {
         if (!(booster instanceof TemporaryBooster)) {
           continue;
         }
@@ -36,10 +40,11 @@ public class BoosterTimeHandler {
   }
 
   public void init() {
-    task = Main.getPlugin()
-      .getServer()
-      .getScheduler()
-      .runTaskTimer(Main.getPlugin(), this::run, 30, 30);
+    task =
+        Main.getPlugin()
+            .getServer()
+            .getScheduler()
+            .runTaskTimer(Main.getPlugin(), this::run, 30, 30);
   }
 
   public BukkitTask getTask() {

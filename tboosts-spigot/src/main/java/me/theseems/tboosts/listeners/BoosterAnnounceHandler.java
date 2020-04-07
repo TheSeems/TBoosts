@@ -17,6 +17,10 @@ public class BoosterAnnounceHandler implements Listener {
       Player player = Bukkit.getPlayer(e.getBooster().getPlayer());
       if (player == null) return;
 
+      if (e.getBooster() instanceof TemporaryBooster) {
+        e.getBooster().getMeta().set("date", System.currentTimeMillis());
+      }
+
       player.sendMessage(
           "§aПолучен бустер: §r"
               + e.getBooster()
