@@ -38,14 +38,19 @@
     </plugins>
   </build>
   <repositories>
-    <repository>
-      <id>spigot-repo</id>
-      <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
-    </repository>
-    <repository>
-      <id>placeholderapi</id>
-      <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
-    </repository>
+      <repository>
+          <id>spigot-repo</id>
+          <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+      </repository>
+      <repository>
+          <id>placeholderapi</id>
+          <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
+      </repository>
+      <repository>
+          <id>github</id>
+          <name>GitHub TheSeems Apache Maven Packages</name>
+          <url>https://maven.pkg.github.com/TheSeems/TCrates</url>
+      </repository>
   </repositories>
   <dependencies>
     <dependency>

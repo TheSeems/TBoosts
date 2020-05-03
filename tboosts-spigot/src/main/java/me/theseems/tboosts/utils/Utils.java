@@ -4,21 +4,19 @@ import me.theseems.tboosts.Main;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class Utils {
 
   public static class StringList {
-    private List<String> strings;
+    private Set<String> strings;
     private String key;
     private Player player;
 
     public StringList(String value) {
-      strings = new ArrayList<>();
+      strings = new HashSet<>();
       if (value.equals(""))
-        strings = new ArrayList<>();
+        strings = new HashSet<>();
       else
         strings.addAll(Arrays.asList(value.split(";")));
     }
@@ -55,7 +53,7 @@ public class Utils {
 
     public static StringList ofMeta(Player player, String key) {
       StringList list;
-      if (player.hasMetadata(key))
+      if (player != null && player.hasMetadata(key))
         list = StringList.of(player.getMetadata(key).iterator().next().asString());
       else
         list = new StringList("");
@@ -74,6 +72,8 @@ public class Utils {
     }
 
     public void setAsMeta(Player player, String key) {
+      if (player == null)
+        return;
       player.setMetadata(key, new FixedMetadataValue(Main.getPlugin(), get()));
     }
 
@@ -83,7 +83,7 @@ public class Utils {
     }
 
     public List<String> getStrings() {
-      return strings;
+      return new ArrayList<>(strings);
     }
   }
 }

@@ -1,7 +1,10 @@
 name: TBoosts
 main: me.theseems.tboosts.Main
+softdepend:
+  - TCrates
+  - PlaceholderAPI
 version: 0.1D
-depend: [PlaceholderAPI]
-api-version: 1.13
+api-version: '1.13'
 commands:
   boosts:
+    permission: tboosts.use

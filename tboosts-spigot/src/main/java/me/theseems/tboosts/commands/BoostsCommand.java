@@ -1,10 +1,7 @@
 package me.theseems.tboosts.commands;
 
 import me.theseems.tboosts.Main;
-import me.theseems.tboosts.commands.subs.BoostsGiveSub;
-import me.theseems.tboosts.commands.subs.BoostsListSub;
-import me.theseems.tboosts.commands.subs.MetaGetSub;
-import me.theseems.tboosts.commands.subs.MetaRemoveSub;
+import me.theseems.tboosts.commands.subs.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
@@ -15,6 +12,7 @@ public class BoostsCommand extends SubHost {
     attach("give", new BoostsGiveSub());
     attach("mtest", new MetaGetSub());
     attach("mrem", new MetaRemoveSub());
+    attach("thp", new SetHealthSub());
   }
 
   private void sendBanner(CommandSender sender) {

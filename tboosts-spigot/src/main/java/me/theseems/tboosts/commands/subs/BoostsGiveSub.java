@@ -15,7 +15,7 @@ public class BoostsGiveSub implements SubCommand {
   @Override
   public void pass(CommandSender sender, String[] args) {
     if (args.length == 0) {
-      sender.sendMessage("§7Please, specify player and booster in arguments");
+      sender.sendMessage("§7Укажите бустер и игрока, которому хотите его выдать.");
       return;
     }
 
