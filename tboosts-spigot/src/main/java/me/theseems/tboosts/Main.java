@@ -1,5 +1,6 @@
 package me.theseems.tboosts;
 
+import me.theseems.tboosts.boosters.DamageBooster;
 import me.theseems.tboosts.boosters.FlashBooster;
 import me.theseems.tboosts.boosters.ImmortalBooster;
 import me.theseems.tboosts.boosters.LuckBooster;
@@ -49,8 +50,8 @@ public class Main extends JavaPlugin {
 
             @Override
             public Booster produce(UUID player) {
-                FlashBooster booster =
-                        new FlashBooster(player) {
+                DamageBooster booster =
+                        new DamageBooster(player) {
                             @Override
                             public String getName() {
                                 return "hulk-" + level;
@@ -242,7 +243,7 @@ public class Main extends JavaPlugin {
         getCommand("boosts").setExecutor(new BoostsCommand());
     }
 
-  public static Plugin getPlugin() {
+    public static Plugin getPlugin() {
     return plugin;
   }
 }
