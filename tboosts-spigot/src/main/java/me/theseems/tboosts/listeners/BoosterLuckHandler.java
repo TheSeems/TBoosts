@@ -35,7 +35,7 @@ public class BoosterLuckHandler implements Listener {
         return (float) maxAmount[0];
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onBreak(BlockBreakEvent e) {
         float percentage;
         if (e.isCancelled()
